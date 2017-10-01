@@ -44,6 +44,7 @@ int main()
 	{
 		mvwprintw(menu,1,0,"%d",row);
 		mvwprintw(menu,2,0,"%d",col);
+		mvwprintw(menu,3,0,"%c",grid[row][col]);
 		c = wgetch(menu);
 		switch(c)
 		{
@@ -72,7 +73,12 @@ int main()
 				else
 					col++;
 				break;
-			
+			case ' ':
+				if (grid[row][col] == '0')
+					grid[row][col] = '1';
+				else
+					grid[row][col] = '0';
+				break;	
 			default:
 				break;
 		}
