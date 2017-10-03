@@ -15,3 +15,8 @@ Author
 -------
 
 -Kurt Gregorek, with inspiration from the RIT CS department 
+
+License
+-----------
+tart is under the MIT license.
+See LICENSE.txt for more information.
