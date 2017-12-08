@@ -19,7 +19,9 @@ void savetofile(char * filename)
 	FILE * fileloc;
 	fileloc = fopen(filename, "w+");
 	for (int r = 0; r < 8; r++){
-			fputs(grid[r], fileloc);
+		for (int c = 0; c < 8; c++){
+			fputc(grid[r][c], fileloc);
+		}
 			fputc('\n',fileloc);
 	}
 	fclose(fileloc);
