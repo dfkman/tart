@@ -18,3 +18,7 @@ PLANNED FEATURES FOR V0.0.1:
 -open up with a blank 32x32 grid to edit
 -Save(?)
 -Navigatable Menu(s)
+
+Credits, etc.
+-The RIT CS Dept, for inspiration, and display.c,
+specifically Margaret Reek and Neil Graham
