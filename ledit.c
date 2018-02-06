@@ -4,22 +4,29 @@
 #include <stdio.h>
 
 //Opens the image from the specified filename
-//@returns the char* representation of the iamge for editing
-unsigned char* loadimage (char * filename){
+//@returns the Image struct representation of the image for editing
+Image loadimage (char * filename){
 	unsigned error;
 	unsigned char* image;
 	unsigned width,height;
 	error = lodepng_decode32_file(&image,&width,&height, filename);
-	if (error != 0){
-		return NULL;
-	}
-	else{
-		return image;
-	}
+	Image ret = {image, width, height};
+	return ret;
+	
 }
 
 //Saves the specified image in memory
-void saveimage (char * filename, unsigned char * image);
+void saveimage (char * filename, Image img){
+	lodepng_encode32_file(filename,img.data,img.width,img.height);
+}
 
 //cleans up the loaded image
-void cleanup (unsigned char * image);
+void cleanup (Image img){
+	free(img.data);
+}
+
+int main(){
+	Image sample = loadimage("appl.png");
+	saveimage ("sampleappl.png", sample);
+	cleanup(sample);
+}
