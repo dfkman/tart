@@ -13,14 +13,14 @@ typedef struct{
 unsigned char * data;
 unsigned width;
 unsigned height;
-}
+} Image;
 
 //Opens the image from the specified filename
-//@returns the char* representation of the iamge for editing
-unsigned char* loadimage (char * filename);
+//@returns the Image struct representation of the image for editing
+Image loadimage (char * filename);
 
 //Saves the specified image in memory 
-void saveimage (char * filename, unsigned char * image);
+void saveimage (char * filename, Image img);
 
 //cleans up the loaded image
-void cleanup (unsigned char * image);
+void cleanup (Image img);

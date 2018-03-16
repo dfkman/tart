@@ -1,17 +1,42 @@
 #include <ncurses.h>
 #include <stdio.h>
 #include <string.h>
+#include <stdint.h>
+#include "ledit.h"
 
-#define WIDTH 30
-#define HEIGHT 10
+#define WIDTH 80
+#define HEIGHT 40
 
 void drawgrid(WINDOW * wind, int r, int c);
 
 int fx = 0;
 int fy = 0;
 
-char grid [8][8];
+//A struct representation of a pixel, and its location
+typedef struct{
+	uint32_t red;
+	uint32_t green;
+	uint32_t blue;
+	uint32_t alpha;
+	int x;
+	int y;
+} Pixel;
 
+
+//Saves the current pixel to the image in memory
+void savetopic(Pixel px, Image img)
+{
+	img.data[4*img.width*px.y+4*px.x+0] = px.red;
+	img.data[4*img.width*px.y+4*px.x+1] = px.green;
+	img.data[4*img.width*px.y+4*px.x+2] = px.blue;
+	img.data[4*img.width*px.y+4*px.x+3] = px.alpha;
+	return;
+}
+
+Pixel newpixel(Image img, int x, int y)
+{
+	
+}
 
 //saves the current grid to a file as plaintext
 void savetofile(char * filename)
@@ -28,29 +53,13 @@ void savetofile(char * filename)
 	return;
 }
 
-void getfilename(){
-	char buffer [256];
-	echo();
-	getstr(buffer);
-	savetofile(buffer);
-	return;
-}
+//Gets filename for saving
+//currently a legacy button (e.g. names are cmd line args now)
 
-//Creates the basic 8x8 grid for editing
-void initgrid()
+int main(int argc, char * []argv)
 {
-	for (int i = 0; i < 8; i++)
-	{
-		for (int k = 0; k < 8; k++)
-		{
-			grid[i][k] = '0';
-		}
-	}
-}	
-
-int main(void)
-{
-	initgrid();
+	Image pic = loadimage(argv[1]);
+	
 	WINDOW * menu;
 	int row = 0;
 	int col = 0;
@@ -62,7 +71,7 @@ int main(void)
 	fy = (12 - HEIGHT) / 2;
 	menu = newwin(HEIGHT, WIDTH, fx, fy);
 	keypad(menu, TRUE);
-	mvprintw(0,0, "tart proof of concept (space to edit, 0 to close)");
+	mvprintw(0,0, "tart ALPHA");
 	mvprintw(1,0, "press s to save.");
 	refresh();
 	int c;
@@ -107,9 +116,9 @@ int main(void)
 					grid[row][col] = '0';
 				break;
 			case 's':
-				mvprintw(4,0,"Insert file name: ");
+				saveimage(argv[1],pic);
+				mvprintw(menu,4,0,"Saving.");
 				refresh();
-				getfilename();
 				break;
 			default:
 				break;
@@ -120,6 +129,7 @@ int main(void)
 	clrtoeol();
 	refresh();
 	endwin();
+	cleanup(pic);
 	return 0;	
 }
 
@@ -149,5 +159,15 @@ void drawgrid(WINDOW * wind, int row, int col)
 		y++;
 	}
 	wrefresh(wind);
+}
+
+//Draws the "Big Picture" version of the image
+//e.g. a rough representation of where the user is
+//on the currently loaded image in relation to the edit grid
+void drawbig(WINDOW * wind, Image img, int ux, int uy)
+{
+	int 
+	if (img.width > img.height)
+
 }
  
