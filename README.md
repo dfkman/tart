@@ -1,8 +1,10 @@
-tart (tArt)
+tart-OLD
 ============
 
 Overview:
 ----------
+
+THIS IS THE ARCHIVED VERSION, BASED ON THE ORIGINAL PROTOTYPE.
 
 tart is a C (ncurses) based image editor for NIX. 
 
